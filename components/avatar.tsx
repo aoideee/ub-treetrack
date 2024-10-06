@@ -4,7 +4,6 @@ import Image from "next/image";
 export default async function Avatar() {
   const {
     data: { user },
-    error,
   } = await createSupabaseServerComponentClient().auth.getUser();
 
   return (
