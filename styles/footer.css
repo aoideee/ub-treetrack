@@ -1,0 +1,9 @@
+/* Footer Styling */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.footer {
+  @apply flex flex-col items-center justify-center border-t-4 border-lime-400 bg-neutral-300 px-3 py-2;
+}

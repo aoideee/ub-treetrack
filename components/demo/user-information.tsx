@@ -1,11 +1,11 @@
 "use client";
 
 import useSession from "@/lib/supabase/use-session";
+
 import { useRouter } from "next/navigation";
 
 export default function UserInformation() {
   const user = useSession()?.user;
-
   const router = useRouter();
 
   return (

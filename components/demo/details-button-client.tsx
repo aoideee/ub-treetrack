@@ -1,8 +1,11 @@
+// Client Component that uses a server wrapper to fetch user data
+
 "use client";
 
-import { useState } from "react";
 import { type User } from "@supabase/supabase-js";
+
 import Link from "next/link";
+import { useState } from "react";
 
 export default function DetailsButtonClient({ user }: { user: User | null }) {
   const [isHidden, setIsHidden] = useState(true);
