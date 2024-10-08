@@ -33,10 +33,9 @@ export default async function NavigationBar() {
 
   // array of common buttons
   const commonButtonsArray = [
-    { href: "/", label: "List" },
-    { href: "/", label: "Photo Gallery" },
+    { href: "/", label: "Plants" },
+    { href: "/", label: "Nature Walk" },
     { href: "/", label: "Statistics" },
-    { href: "/", label: "About" },
   ];
 
   // generate common buttons for desktop
