@@ -19,8 +19,8 @@ export default function Header() {
             height={75}
           />
           <div className="logo-text">
-            <h1 className="h1">UB TreeTrack</h1>
-            <p>Belmopan Campus</p>
+            <span className="h1">UB TreeTrack</span>
+            <span>Belmopan Campus</span>
           </div>
         </div>
       </Link>

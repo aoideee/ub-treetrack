@@ -14,7 +14,7 @@
   }
 
   main {
-    @apply w-full flex-1 bg-white bg-opacity-85 lg:mx-auto lg:w-3/4;
+    @apply w-full flex-1 bg-white bg-opacity-85 p-5 lg:mx-auto lg:w-4/5 lg:p-10;
   }
 
   /* shadcn generated*/
