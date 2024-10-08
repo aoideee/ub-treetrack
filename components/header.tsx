@@ -13,7 +13,7 @@ export default function Header() {
       <Link href="/">
         <div className="logo-div">
           <Image
-            src="/images/treetrack-icon.png"
+            src="/images/treetrack-circle-icon.png"
             alt="University of Belize TreeTrack Logo"
             width={75}
             height={75}

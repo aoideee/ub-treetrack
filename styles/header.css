@@ -5,15 +5,15 @@
 @tailwind utilities;
 
 .header {
-  @apply flex flex-col items-center justify-between border-b-4 border-lime-400 bg-neutral-300 px-3 py-2 lg:flex-row;
+  @apply flex flex-col items-center justify-between border-b-4 border-fuchsia-500 bg-lime-500 px-3 py-2 lg:flex-row lg:justify-center lg:gap-6;
 }
 
 .logo-div {
-  @apply mr-4 flex flex-row items-center justify-between lg:mr-0 lg:gap-3;
+  @apply mr-4 flex flex-row items-center justify-between p-1 lg:mr-0 lg:gap-3;
 }
 
 .logo-text {
-  @apply flex flex-col items-center lg:items-start;
+  @apply ml-3 flex flex-col items-center lg:ml-0 lg:items-start;
 }
 
 .h1 {
