@@ -62,8 +62,8 @@ export default async function NavigationBar() {
         {commonButtonsDesktop}
         {user ? (
           <>
-            <Link href="/">
-              <Button variant={"outline"}>Create</Button>
+            <Link href="/add-plant">
+              <Button variant={"outline"}>Add Plant</Button>
             </Link>
             <LogoutButton name={user?.user_metadata?.full_name || "User"} />
           </>
@@ -72,7 +72,7 @@ export default async function NavigationBar() {
         )}
       </nav>
 
-      {/* Desktop */}
+      {/* Mobile */}
       <nav className="navigation-mobile md:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -82,10 +82,10 @@ export default async function NavigationBar() {
             {commonButtonsMobile}
             {user ? (
               <>
-                <Link href="/">
+                <Link href="/add-plant">
                   <DropdownMenuItem>
                     <Button variant={"outline"} className="w-full">
-                      Create
+                      Add Plant
                     </Button>
                   </DropdownMenuItem>
                 </Link>
