@@ -10,7 +10,7 @@
   }
 
   .bg {
-    @apply bg-[url('/backgrounds/scenery.png')] bg-cover bg-center;
+    @apply md:bg-[url('/backgrounds/scenery.png')] md:bg-cover md:bg-center;
   }
 
   main {
