@@ -1,6 +1,8 @@
 // API route that handles uploading an image to Imgur
 // as server actions are unable to process file uploads
 
+// reference: https://medium.com/@mrrabbilhasan/file-upload-in-next-js-14-app-router-most-simple-clean-way-5ed4c90fde39
+
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
