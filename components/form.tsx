@@ -1,5 +1,7 @@
 "use client";
 
+import "@/styles/form.css";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -120,7 +122,7 @@ export default function TextareaForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="form">
         {/* Scientific Name */}
         <FormField
           control={form.control}
