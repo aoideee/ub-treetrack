@@ -1,11 +1,16 @@
 "use client";
 
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -15,12 +20,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 import { imgurUpload } from "@/lib/functions/imgur-upload";
+import { addSupabaseEntry } from "@/actions";
 
-// zod schema
+// zod schema and constraints
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -49,6 +53,9 @@ const FormSchema = z.object({
 });
 
 export default function TextareaForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -59,54 +66,60 @@ export default function TextareaForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsSubmitting(true);
+
+    // split common names into an array
     const commonNamesArray = data.commonNames
       .split(",")
       .map((name) => name.trim());
 
-    const result = {
-      ...data,
-      commonNames: commonNamesArray,
-    };
-
     try {
-      const imgurFormData = new FormData();
-      imgurFormData.set("image", result.imageFile as Blob);
-      imgurFormData.set("type", "file");
-      imgurFormData.set("title", result.scientificName as string);
-      imgurFormData.set("description", result.plantDescription as string);
-      imgurFormData.set("album", process.env.IMGUR_ALBUM_HASH as string);
-
-      const response = await imgurUpload(imgurFormData);
-
+      // upload image to Imgur
+      const response = await imgurUpload(data);
       if (!response.ok) {
-        throw new Error(response.message || "Something went wrong");
+        throw new Error(response.statusText || "Something went wrong");
       }
+      const imgurResponse = await response.json();
+      const imageLink = imgurResponse.link;
 
-      toast({
-        title: "Image uploaded successfully",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(response, null, 2)}
-            </code>
-          </pre>
-        ),
-      });
+      // add entry to Supabase
 
-      console.log(response);
+      const supabaseData = {
+        scientificName: data.scientificName,
+        commonNames: commonNamesArray,
+        plantDescription: data.plantDescription,
+        imageLink,
+      };
+
+      const supabaseResponse = await addSupabaseEntry(supabaseData);
+
+      if (supabaseResponse.success) {
+        toast({
+          title: "Image uploaded successfully!",
+          description: "Redirecting...",
+        });
+
+        if (supabaseResponse.redirectUrl) {
+          router.push(supabaseResponse.redirectUrl);
+        } else {
+          throw new Error("Redirect URL is undefined");
+        }
+      }
     } catch (error) {
       toast({
         title: "Error uploading image",
         description: String(error),
       });
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        {/* Sientific Name */}
+        {/* Scientific Name */}
         <FormField
           control={form.control}
           name="scientificName"
@@ -114,9 +127,15 @@ export default function TextareaForm() {
             <FormItem>
               <FormLabel>Scientific Name</FormLabel>
               <FormControl>
-                <Input placeholder="Swietenia macrophylla" {...field} />
+                <Input
+                  placeholder="Swietenia macrophylla"
+                  {...field}
+                  disabled={isSubmitting}
+                />
               </FormControl>
-              <FormDescription>{`Scientific name of the plant (e.g. Swietenia macrophylla).`}</FormDescription>
+              <FormDescription>
+                {`Scientific name of the plant (e.g. Swietenia macrophylla).`}
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -127,9 +146,13 @@ export default function TextareaForm() {
           name="commonNames"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Common Name(s)</FormLabel>
+              <FormLabel>Common Names</FormLabel>
               <FormControl>
-                <Input placeholder="Mahogany, Caoba, Mara, Mogno" {...field} />
+                <Input
+                  placeholder="Mahogany, Caoba, Mara, Mogno"
+                  {...field}
+                  disabled={isSubmitting}
+                />
               </FormControl>
               <FormDescription>
                 {`Separate each name with a comma (e.g. Mahogany, Caoba, Mara, Mogno).`}
@@ -150,6 +173,7 @@ export default function TextareaForm() {
                   placeholder="Enter Plant Description"
                   className="h-48"
                   {...field}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormDescription>
@@ -176,18 +200,20 @@ export default function TextareaForm() {
                   onBlur={field.onBlur}
                   name={field.name}
                   ref={field.ref}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormDescription>
-                Accepted image file formats: JPG, JPEG, PNG, WEBP. Max file
-                size: 10MB
+                Accepted image file formats: JPG, JPEG, PNG, WEBP
               </FormDescription>
               <FormDescription>Max file size: 10MB</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </Button>
       </form>
     </Form>
   );
