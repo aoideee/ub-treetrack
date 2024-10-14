@@ -26,13 +26,17 @@ export default function PlantOptions({
   const handleDelete = async () => {
     setIsSubmitting(true);
     try {
+      // delete the image from Imgur
       await deleteImgurImage(imageHash);
 
+      // delete the plant entry from Supabase
       await deleteSupabaseEntry(plantId);
       toast({
         title: "Plant deleted",
         description: "The plant has been successfully deleted.",
       });
+
+      // redirect to the homepage
       router.push("/");
     } catch (error) {
       console.error("Error deleting plant:", error);
@@ -45,6 +49,7 @@ export default function PlantOptions({
     }
   };
 
+  // only show the options if the user is authenticated
   return (
     <>
       {user ? (

@@ -5,6 +5,7 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+// server action to add a new plant entry to the Supabase database
 export async function addSupabaseEntry(initialData: {
   scientificName: string;
   commonNames: string[];
@@ -58,6 +59,7 @@ export async function addSupabaseEntry(initialData: {
   }
 }
 
+// server action to delete a plant entry from the Supabase database
 export async function deleteSupabaseEntry(plantId: string) {
   try {
     const supabase = createSupabaseServerClient();
@@ -93,6 +95,7 @@ export async function deleteSupabaseEntry(plantId: string) {
   }
 }
 
+// server action to delete an image from Imgur
 export async function deleteImgurImage(imageHash: string) {
   // make a call to the Imgur API to delete the image
   const response = await fetch(`https://api.imgur.com/3/image/${imageHash}`, {

@@ -1,3 +1,5 @@
+// Plant page
+
 import "@/styles/plant-page.css";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
