@@ -10,9 +10,8 @@ export async function addSupabaseEntry(initialData: {
   commonNames: string[];
   plantDescription: string;
   imageLink: string;
+  imageHash: string;
 }) {
-  console.log(initialData);
-
   try {
     const supabase = createSupabaseServerClient();
 
@@ -32,6 +31,7 @@ export async function addSupabaseEntry(initialData: {
         common_names: JSON.stringify(initialData.commonNames),
         description: initialData.plantDescription,
         photo_link: initialData.imageLink,
+        imgur_hash: initialData.imageHash,
         user_id: user.id,
       })
       .select("plant_id");
@@ -40,9 +40,13 @@ export async function addSupabaseEntry(initialData: {
       throw error;
     }
 
-    console.log(entry);
+    // feedback
+    console.log(
+      `[UB TreeTrack] ${user.user_metadata.full_name} inserted plant entry to Supabase ${entry[0].plant_id}`,
+    );
 
     revalidatePath("/");
+
     return {
       success: true,
       redirectUrl: `/plant/${entry[0].plant_id}`,
@@ -51,5 +55,58 @@ export async function addSupabaseEntry(initialData: {
   } catch (error) {
     console.error(error);
     return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function deleteSupabaseEntry(plantId: string) {
+  try {
+    const supabase = createSupabaseServerClient();
+
+    // get the user from the session
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    const { error } = await supabase
+      .from("plants")
+      .delete()
+      .eq("plant_id", plantId);
+
+    if (error) {
+      throw error;
+    }
+
+    // feedback
+    console.log(
+      `[UB TreeTrack] ${user.user_metadata.full_name} deleted plant entry from Supabase: ${plantId}`,
+    );
+
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function deleteImgurImage(imageHash: string) {
+  // make a call to the Imgur API to delete the image
+  const response = await fetch(`https://api.imgur.com/3/image/${imageHash}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `BEARER ${process.env.IMGUR_ACCESS_TOKEN}`,
+    },
+  });
+
+  const imgurResponse = await response.json();
+
+  if (imgurResponse.success) {
+    console.log(`[UB TreeTrack] Deleted plant image from Imgur: ${imageHash}`);
+  } else {
+    console.error(`[UB TreeTrack] Failed to delete from Imgur: ${imageHash}`);
   }
 }

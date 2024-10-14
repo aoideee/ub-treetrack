@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card {
+  @apply mx-auto flex max-w-3xl flex-col items-center rounded-lg bg-white p-6 shadow-md;
+}
+
+h1 {
+  @apply mb-4 text-3xl font-bold uppercase;
+}
+
+h2 {
+  @apply mb-2 text-xl font-semibold;
+}
+
+p {
+  @apply mb-4 italic;
+}

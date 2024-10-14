@@ -81,6 +81,7 @@ export default function TextareaForm() {
       }
       const imgurResponse = await response.json();
       const imageLink = imgurResponse.link;
+      const imageHash = imgurResponse.hash;
 
       // add entry to Supabase
 
@@ -89,6 +90,7 @@ export default function TextareaForm() {
         commonNames: commonNamesArray,
         plantDescription: data.plantDescription,
         imageLink,
+        imageHash,
       };
 
       const supabaseResponse = await addSupabaseEntry(supabaseData);

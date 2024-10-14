@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 h1 {
   @apply text-center text-4xl font-bold text-fuchsia-800;
 }
