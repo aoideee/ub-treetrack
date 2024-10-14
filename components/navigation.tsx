@@ -62,7 +62,7 @@ export default async function NavigationBar() {
         {commonButtonsDesktop}
         {user ? (
           <>
-            <Link href="/add-plant">
+            <Link href="/admin/add">
               <Button variant={"outline"}>Add Plant</Button>
             </Link>
             <LogoutButton name={user?.user_metadata?.full_name || "User"} />
@@ -82,7 +82,7 @@ export default async function NavigationBar() {
             {commonButtonsMobile}
             {user ? (
               <>
-                <Link href="/add-plant">
+                <Link href="/admin/add">
                   <DropdownMenuItem>
                     <Button variant={"outline"} className="w-full">
                       Add Plant
