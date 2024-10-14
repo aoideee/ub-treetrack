@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { imgurUpload } from "@/lib/functions/imgur-upload";
-import { Add } from "@/actions/add";
 
 // zod schema
 
