@@ -25,8 +25,6 @@ export default async function AddPlant() {
     console.error("Error fetching scientific names:", error);
   }
 
-  console.log(plants);
-
   return (
     <>
       <h1>Plants Database</h1>
