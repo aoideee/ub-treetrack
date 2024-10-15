@@ -8,6 +8,8 @@ import { type User } from "@supabase/supabase-js";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
+import Link from "next/link";
+
 import { deleteSupabaseEntry, deleteImgurImage } from "@/actions";
 
 export default function PlantOptions({
@@ -54,9 +56,11 @@ export default function PlantOptions({
     <>
       {user ? (
         <div className="mt-4 flex space-x-4">
-          <Button variant="default" disabled={isSubmitting}>
-            Update
-          </Button>
+          <Link href={`/plant/${plantId}/update`}>
+            <Button variant="default" disabled={isSubmitting}>
+              Update
+            </Button>
+          </Link>
           <Button
             variant="destructive"
             onClick={handleDelete}

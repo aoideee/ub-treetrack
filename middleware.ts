@@ -16,11 +16,11 @@ export async function middleware(request: NextRequest) {
 
   // protected routes and sub-routes
 
-  const protectedRoutes = ["/add-plant", "/dashboard", "/settings"];
+  const protectedRoutes = ["/admin", "/update"];
 
   if (
     !user &&
-    protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+    protectedRoutes.some((route) => request.nextUrl.pathname.includes(route))
   ) {
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -29,5 +29,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/add-plant/:path*", "/dashboard/:path*", "/settings/:path*"],
+  matcher: ["/", "/admin/:path*", "/plant/:id/update/:path*"],
 };

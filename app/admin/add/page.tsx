@@ -1,12 +1,12 @@
 import "@/styles/main.css";
 
-import TextareaForm from "@/components/form";
+import PlantAddForm from "@/components/add-form";
 
 export default function AddPlant() {
   return (
     <>
       <h1>Add Plant</h1>
-      <TextareaForm />
+      <PlantAddForm />
     </>
   );
 }

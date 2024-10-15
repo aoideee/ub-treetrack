@@ -32,20 +32,17 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const FormSchema = z.object({
-  scientificName: z.string().min(2, {
-    message: "Scientific name must be at least 2 characters.",
+  scientificName: z.string().min(1, {
+    message: "Scientific name is required",
   }),
-  commonNames: z.string().min(2, {
-    message: "Common name(s) must be at least 2 characters.",
+  commonNames: z.string().min(1, {
+    message: "Common name(s) is required",
   }),
-  plantDescription: z.string().min(10, {
-    message: "Plant description must be at least 10 characters.",
+  plantDescription: z.string().min(1, {
+    message: "Plant description is required",
   }),
   imageFile: z
-    .any()
-    .refine((file) => file instanceof File, {
-      message: "Please upload a valid file.",
-    })
+    .instanceof(File, { message: "Image file is required" })
     .refine((file) => ACCEPTED_FILE_TYPES.includes(file.type), {
       message: "Only JPG, JPEG, PNG, and WEBP files are accepted.",
     })
@@ -54,7 +51,7 @@ const FormSchema = z.object({
     }),
 });
 
-export default function TextareaForm() {
+export default function PlantAddForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -215,7 +212,7 @@ export default function TextareaForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting} className="w-full">
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>
