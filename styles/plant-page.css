@@ -6,14 +6,18 @@
   @apply mx-auto flex max-w-3xl flex-col items-center rounded-lg bg-white p-6 shadow-md;
 }
 
-h1 {
-  @apply mb-4 text-3xl font-bold uppercase;
+.plant-name {
+  @apply mb-0 text-3xl font-bold text-fuchsia-800;
 }
 
-h2 {
-  @apply mb-2 text-xl font-semibold;
+.information-title {
+  @apply mb-2 text-xl font-semibold text-fuchsia-800;
 }
 
-p {
-  @apply mb-4 italic;
+.plant-image {
+  @apply mb-4 h-auto w-auto rounded-lg;
+}
+
+.information-small {
+  @apply text-sm italic text-gray-500;
 }

@@ -16,6 +16,7 @@ type Plant = {
   description: string;
   photo_link: string;
   imgur_hash: string;
+  last_modified: string;
 };
 
 async function getPlant(uuid: string): Promise<Plant | null> {
@@ -69,19 +70,20 @@ export default async function PlantPage({
 
   return (
     <article className="card">
-      <h1 className="mb-4 text-3xl font-bold">{plant.scientific_name}</h1>
+      <h1 className="plant-name">{plant.scientific_name}</h1>
+      <p className="information-small mb-4 mt-2">
+        {JSON.parse(plant.common_names).join(", ")}
+      </p>
       {plant.photo_link && (
         <Image
           src={plant.photo_link}
           alt={plant.scientific_name}
           width={500}
           height={500}
-          className="mb-4 h-auto w-auto rounded-lg"
+          className="plant-image"
         />
       )}
-      <h2>Common Names</h2>
-      <p>{JSON.parse(plant.common_names).join(", ")}</p>
-      <h2>Description</h2>
+      <h2 className="information-title">Plant Description</h2>
       <p style={{ whiteSpace: "pre-wrap" }}>{plant.description}</p>
 
       <PlantOptions
@@ -89,6 +91,10 @@ export default async function PlantPage({
         plantId={params.uuid}
         imageHash={plant.imgur_hash}
       />
+
+      <p className="information-small mt-4">
+        Last Modified: {new Date(plant.last_modified).toLocaleString()}
+      </p>
     </article>
   );
 }
