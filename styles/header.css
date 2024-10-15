@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .header {
-  @apply flex flex-col items-center justify-between border-b-4 border-fuchsia-500 bg-lime-500 px-3 py-2 lg:flex-row lg:justify-center lg:gap-6;
+  @apply flex flex-col items-center justify-between border-b-4 border-fuchsia-500 bg-lime-500 px-3 py-2 pt-3 lg:flex-row lg:justify-center lg:gap-6;
 }
 
 .logo-div {
