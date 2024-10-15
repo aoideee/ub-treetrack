@@ -33,7 +33,7 @@ export default async function NavigationBar() {
 
   // array of common buttons
   const commonButtonsArray = [
-    { href: "/", label: "Plants" },
+    { href: "/plants", label: "Plants" },
     { href: "/", label: "Nature Walk" },
     { href: "/", label: "Statistics" },
   ];
