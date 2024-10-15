@@ -46,7 +46,7 @@ export async function addSupabaseEntry(initialData: {
       `[UB TreeTrack] ${user.user_metadata.full_name} inserted plant entry to Supabase ${entry[0].plant_id}`,
     );
 
-    revalidatePath("/");
+    revalidatePath("/plants");
 
     return {
       success: true,
@@ -87,7 +87,7 @@ export async function deleteSupabaseEntry(plantId: string) {
       `[UB TreeTrack] ${user.user_metadata.full_name} deleted plant entry from Supabase: ${plantId}`,
     );
 
-    revalidatePath("/");
+    revalidatePath("/plants");
     return { success: true };
   } catch (error) {
     console.error(error);
@@ -179,6 +179,7 @@ export async function updateSupabaseEntry(
     );
 
     revalidatePath(`/plant/${plantId}`);
+    revalidatePath(`/plants`);
     return { success: true, redirectUrl: `/plant/${plantId}` };
   } catch (error) {
     console.error(error);
