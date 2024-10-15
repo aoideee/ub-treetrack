@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .h1-main {
-  @apply mt-6 text-center text-4xl font-bold text-fuchsia-800 lg:mt-0;
+  @apply mb-3 mt-6 text-center text-4xl font-bold text-fuchsia-800 lg:mt-0;
 }
 
 .front-carousel {
