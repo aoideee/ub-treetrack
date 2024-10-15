@@ -5,6 +5,7 @@ import "@/styles/plant-page.css";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 import PlantOptions from "@/components/plant-options";
 
@@ -31,6 +32,24 @@ async function getPlant(uuid: string): Promise<Plant | null> {
   }
 
   return plant;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { uuid: string };
+}): Promise<Metadata> {
+  const plant = await getPlant(params.uuid);
+
+  if (!plant) {
+    return {
+      title: "Plant Not Found",
+    };
+  }
+
+  return {
+    title: plant.scientific_name,
+  };
 }
 
 export default async function PlantPage({
