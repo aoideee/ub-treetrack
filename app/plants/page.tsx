@@ -25,11 +25,19 @@ export default async function AddPlant() {
     console.error("Error fetching scientific names:", error);
   }
 
+  // sort plants array in alphabetical order by scientific_name
+  const sortedPlants = plants?.sort((a, b) =>
+    a.scientific_name.localeCompare(b.scientific_name),
+  );
+
   return (
     <>
       <h1>Plants Database</h1>
       <Table className="mx-auto mt-4 bg-white md:w-2/3">
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>
+          Table of all plants in the database in alphabetical order. Click on
+          the Scientific Name to view its dedicated page.
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Scientific Name</TableHead>
@@ -37,7 +45,7 @@ export default async function AddPlant() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {plants?.map((plant) => (
+          {sortedPlants?.map((plant) => (
             <TableRow key={plant.plant_id} className="even:bg-gray-100">
               <TableCell className="font-medium">
                 <Link href={`/plant/${plant.plant_id}`}>
