@@ -76,7 +76,7 @@ export default async function PlantPage({
           alt={plant.scientific_name}
           width={500}
           height={500}
-          className="mb-4 rounded-lg"
+          className="mb-4 h-auto w-auto rounded-lg"
         />
       )}
       <h2>Common Names</h2>
