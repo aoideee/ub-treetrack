@@ -21,7 +21,7 @@ export default async function AddPlant() {
 
   return (
     <>
-      <h1>Add Plant</h1>
+      <h1 className="h1-main">Add Plant</h1>
       <PlantAddForm existingNames={scientificNamesArray} />
     </>
   );

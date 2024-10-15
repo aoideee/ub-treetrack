@@ -32,7 +32,7 @@ export default async function AddPlant() {
 
   return (
     <>
-      <h1>Plants Database</h1>
+      <h1 className="h1-main">Plants Database</h1>
       <Table className="mx-auto mt-4 bg-white md:w-2/3">
         <TableCaption>
           Table of all plants in the database in alphabetical order. Click on

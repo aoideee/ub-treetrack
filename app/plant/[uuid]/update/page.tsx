@@ -25,7 +25,7 @@ export default async function UpdatePlant({
 
   return (
     <>
-      <h1>Update Plant</h1>
+      <h1 className="h1-main">Update Plant</h1>
       <PlantUpdateForm plant={plant} />
     </>
   );
