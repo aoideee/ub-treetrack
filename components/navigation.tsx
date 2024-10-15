@@ -21,13 +21,7 @@ export default async function NavigationBar() {
   // authenticate the user session
   const {
     data: { user },
-    error,
   } = await supabase.auth.getUser();
-
-  // show an error message if the user session is not found
-  if (error) {
-    console.error("Error fetching user:", error.message);
-  }
 
   // these navigation buttons are shown to both logged in and logged out users
 
