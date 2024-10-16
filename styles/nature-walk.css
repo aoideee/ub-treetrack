@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nature-grid {
+  @apply mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.nature-card {
+  @apply w-full transform transition-transform hover:scale-105 hover:bg-lime-50 hover:shadow-lg;
+}
+
+.nature-image {
+  @apply h-64 w-full object-cover;
+}
+
+.nature-heading {
+  @apply text-xl font-bold text-fuchsia-800;
+}
+
+.nature-description {
+  @apply text-gray-500;
+}
