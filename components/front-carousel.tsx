@@ -24,6 +24,10 @@ export default function FrontCarousel() {
         className="w-full max-w-xs"
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
+        opts={{
+          align: "start",
+          loop: true,
+        }}
       >
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
