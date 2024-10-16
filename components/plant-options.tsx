@@ -1,5 +1,3 @@
-// Client Component that uses a server wrapper to fetch user data
-
 "use client";
 
 import { useToast } from "@/hooks/use-toast";
