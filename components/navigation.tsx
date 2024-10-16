@@ -28,8 +28,8 @@ export default async function NavigationBar() {
   // array of common buttons
   const commonButtonsArray = [
     { href: "/plants", label: "Plants" },
-    { href: "/", label: "Nature Walk" },
-    { href: "/", label: "Reports" },
+    { href: "/nature-walk", label: "Nature Walk" },
+    { href: "/reports", label: "Reports" },
   ];
 
   // generate common buttons for desktop
