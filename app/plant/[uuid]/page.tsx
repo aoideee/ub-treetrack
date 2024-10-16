@@ -84,7 +84,7 @@ export default async function PlantPage({
         />
       )}
       <h2 className="information-title">Plant Description</h2>
-      <p className="w-full text-center" style={{ whiteSpace: "pre-wrap" }}>
+      <p className="w-full" style={{ whiteSpace: "pre-wrap" }}>
         {plant.description}
       </p>
 
