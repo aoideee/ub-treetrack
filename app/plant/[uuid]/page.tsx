@@ -84,7 +84,9 @@ export default async function PlantPage({
         />
       )}
       <h2 className="information-title">Plant Description</h2>
-      <p style={{ whiteSpace: "pre-wrap" }}>{plant.description}</p>
+      <p className="w-full text-center" style={{ whiteSpace: "pre-wrap" }}>
+        {plant.description}
+      </p>
 
       <PlantOptions
         user={user}
@@ -93,7 +95,17 @@ export default async function PlantPage({
       />
 
       <p className="information-small mt-4">
-        Last Modified: {new Date(plant.last_modified).toLocaleString()}
+        Last Modified:{" "}
+        {new Date(plant.last_modified).toLocaleString("en-US", {
+          timeZone: "America/Belize",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        })}
       </p>
     </article>
   );

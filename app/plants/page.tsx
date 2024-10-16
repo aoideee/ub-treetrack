@@ -55,7 +55,16 @@ export default async function AddPlant() {
                 </Link>
               </TableCell>
               <TableCell className="text-right">
-                {new Date(plant.last_modified).toLocaleString()}
+                {new Date(plant.last_modified).toLocaleString("en-US", {
+                  timeZone: "America/Belize",
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: true,
+                })}
               </TableCell>
             </TableRow>
           ))}
