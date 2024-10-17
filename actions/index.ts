@@ -186,3 +186,32 @@ export async function updateSupabaseEntry(
     return { success: false, error: (error as Error).message };
   }
 }
+
+// server action to add a new rating to the Supabase database
+export async function addSupabaseRating(plantId: string, ratingValue: number) {
+  try {
+    const supabase = createSupabaseServerClient();
+
+    const { error } = await supabase.from("ratings").insert([
+      {
+        plant_id: plantId,
+        rating_value: ratingValue,
+      },
+    ]);
+
+    if (error) {
+      throw error;
+    }
+
+    // feedback
+    console.log(
+      `[UB TreeTrack] Plant ${plantId} received rating ${ratingValue}`,
+    );
+
+    revalidatePath(`/plant/${plantId}`);
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: (error as Error).message };
+  }
+}

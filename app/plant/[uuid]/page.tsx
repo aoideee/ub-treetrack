@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 import PlantOptions from "@/components/plant-options";
+import Rating from "@/components/rating";
 
 type Plant = {
   id: string;
@@ -17,6 +18,13 @@ type Plant = {
   photo_link: string;
   imgur_hash: string;
   last_modified: string;
+};
+
+type Rating = {
+  rating_id: string;
+  plant_id: string;
+  rating_value: number;
+  created_at: string;
 };
 
 async function getPlant(uuid: string): Promise<Plant | null> {
@@ -33,6 +41,21 @@ async function getPlant(uuid: string): Promise<Plant | null> {
   }
 
   return plant;
+}
+
+async function getPlantRatings(uuid: string): Promise<Rating[] | null> {
+  const supabase = createSupabaseServerClient();
+
+  const { data: plantRatings, error } = await supabase
+    .from("ratings")
+    .select("*")
+    .eq("plant_id", uuid);
+
+  if (error) {
+    return null;
+  }
+
+  return plantRatings;
 }
 
 export async function generateMetadata({
@@ -59,8 +82,12 @@ export default async function PlantPage({
   params: { uuid: string };
 }) {
   const plant = await getPlant(params.uuid);
-
   if (!plant) {
+    notFound();
+  }
+
+  const plantRatings = await getPlantRatings(params.uuid);
+  if (!plantRatings) {
     notFound();
   }
 
@@ -84,6 +111,7 @@ export default async function PlantPage({
         />
       )}
       <h2 className="information-title">Plant Description</h2>
+      <Rating plantId={params.uuid} plantRatings={plantRatings} />
       <p className="w-full" style={{ whiteSpace: "pre-wrap" }}>
         {plant.description}
       </p>
