@@ -6,6 +6,17 @@ import { type User } from "@supabase/supabase-js";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import Link from "next/link";
 
 import { deleteSupabaseEntry, deleteImgurImage } from "@/actions";
@@ -52,22 +63,45 @@ export default function PlantOptions({
   // only show the options if the user is authenticated
   return (
     <>
-      {user ? (
-        <div className="mt-4 flex space-x-4">
-          <Link href={`/plant/${plantId}/update`}>
-            <Button variant="default" disabled={isSubmitting}>
-              Update
+      <div className="mt-4 flex space-x-4">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline">QR Code</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Plant QR Code</DialogTitle>
+              <DialogDescription>
+                Click on the image to download at full resolution.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex items-center space-x-2"></div>
+            <DialogFooter className="sm:justify-start">
+              <DialogClose asChild>
+                <Button type="button" variant="secondary">
+                  Close
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        {user ? (
+          <>
+            <Link href={`/plant/${plantId}/update`}>
+              <Button variant="default" disabled={isSubmitting}>
+                Update
+              </Button>
+            </Link>
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={isSubmitting}
+            >
+              Delete
             </Button>
-          </Link>
-          <Button
-            variant="destructive"
-            onClick={handleDelete}
-            disabled={isSubmitting}
-          >
-            Delete
-          </Button>
-        </div>
-      ) : null}
+          </>
+        ) : null}
+      </div>
     </>
   );
 }
