@@ -74,7 +74,7 @@ export default function PlantOptions({
   // only show the options if the user is authenticated
   return (
     <>
-      <div className="mt-4 flex space-x-4">
+      <div className="mt-1 flex space-x-4">
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline">QR Code</Button>

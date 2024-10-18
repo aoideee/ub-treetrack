@@ -139,12 +139,7 @@ export default async function PlantPage({
           className="plant-image"
         />
       )}
-      <h2 className="information-title">Plant Description</h2>
       <Rating plantId={params.uuid} plantRatings={plantRatings} />
-      <p className="w-full" style={{ whiteSpace: "pre-wrap" }}>
-        {plant.description}
-      </p>
-
       <PlantOptions
         user={user}
         plantId={params.uuid}
@@ -152,6 +147,10 @@ export default async function PlantPage({
         qrCode={qrCode}
       />
 
+      <h2 className="information-title mt-4 uppercase">{`Description of ${plant.scientific_name}`}</h2>
+      <p className="w-full" style={{ whiteSpace: "pre-wrap" }}>
+        {plant.description}
+      </p>
       <p className="information-small mt-4">
         Last Modified:{" "}
         {new Date(plant.last_modified).toLocaleString("en-US", {
