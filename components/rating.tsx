@@ -40,7 +40,7 @@ const FormSchema = z.object({
     .max(5, { message: "Rating must be at most 5." }),
 });
 
-const COOLDOWN_KEY = "last_rating_submission";
+const COOLDOWN_KEY_PREFIX = "last_rating_submission_";
 const COOLDOWN_PERIOD = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function Rating({
@@ -63,9 +63,11 @@ export default function Rating({
     },
   });
 
+  const cooldownKey = `${COOLDOWN_KEY_PREFIX}${plantId}`;
+
   useEffect(() => {
     const checkCooldown = () => {
-      const lastSubmission = localStorage.getItem(COOLDOWN_KEY);
+      const lastSubmission = localStorage.getItem(cooldownKey);
       if (lastSubmission) {
         const timeSinceLastSubmission =
           Date.now() - parseInt(lastSubmission, 10);
@@ -85,13 +87,13 @@ export default function Rating({
     checkCooldown();
     const interval = setInterval(checkCooldown, 60000); // update every minute
     return () => clearInterval(interval);
-  }, []);
+  }, [cooldownKey]);
 
   const handleRating = async (data: z.infer<typeof FormSchema>) => {
     if (isOnCooldown) {
       toast({
         title: "Error",
-        description: "You can only submit one rating per day.",
+        description: "You can only submit one rating per day for this plant.",
       });
       return;
     }
@@ -103,7 +105,7 @@ export default function Rating({
       const result = await addSupabaseRating(plantId, data.rating_value);
 
       if (result.success) {
-        localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+        localStorage.setItem(cooldownKey, Date.now().toString());
         setIsOnCooldown(true);
         setCooldownTime(COOLDOWN_PERIOD);
         toast({
@@ -202,7 +204,7 @@ export default function Rating({
             </Button>
             {isOnCooldown && cooldownTime && (
               <p className="text-sm text-gray-500">
-                You can submit another rating in:{" "}
+                You can submit another rating for this plant in:{" "}
                 {formatCooldownTime(cooldownTime)}
               </p>
             )}
