@@ -18,12 +18,14 @@ export default function LoginButton(props: { nextUrl?: string }) {
       description: "You will be redirected soon.",
     });
 
+    console.log(window.location);
+
     // authenticate with Google OAuth
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${location.origin}/auth/callback?next=${
-          props.nextUrl || ""
+          props.nextUrl ?? (window.location.href || "")
         }`,
       },
     });
