@@ -41,7 +41,7 @@ const FormSchema = z.object({
 });
 
 const COOLDOWN_KEY_PREFIX = "last_rating_submission_";
-const COOLDOWN_PERIOD = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const COOLDOWN_PERIOD = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 export default function Rating({
   plantId,
@@ -85,15 +85,16 @@ export default function Rating({
     };
 
     checkCooldown();
-    const interval = setInterval(checkCooldown, 60000); // update every minute
+    const interval = setInterval(checkCooldown, 1000); // update every second
     return () => clearInterval(interval);
   }, [cooldownKey]);
 
   const handleRating = async (data: z.infer<typeof FormSchema>) => {
     if (isOnCooldown) {
       toast({
-        title: "Error",
-        description: "You can only submit one rating per day for this plant.",
+        title: "Rating Error",
+        description:
+          "Rating cooldown active. Please wait before submitting another rating.",
       });
       return;
     }
@@ -143,9 +144,11 @@ export default function Rating({
   }
 
   function formatCooldownTime(ms: number) {
-    const hours = Math.floor(ms / (60 * 60 * 1000));
     const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
-    return `${hours}h ${minutes}m`;
+    const seconds = Math.floor((ms % (60 * 1000)) / 1000)
+      .toString()
+      .padStart(2, "0");
+    return `${minutes}m ${seconds}s`;
   }
 
   return (
@@ -193,6 +196,7 @@ export default function Rating({
             />
             <Button
               type="submit"
+              variant={isOnCooldown ? "outline" : "default"}
               className="h-0 rounded-3xl p-3"
               disabled={isSubmitting}
             >
@@ -204,8 +208,9 @@ export default function Rating({
             </Button>
             {isOnCooldown && cooldownTime && (
               <p className="text-sm text-gray-500">
-                You can submit another rating for this plant in:{" "}
-                {formatCooldownTime(cooldownTime)}
+                <code className="rounded bg-slate-300 px-2 py-1 font-mono font-bold">
+                  {formatCooldownTime(cooldownTime)}
+                </code>
               </p>
             )}
           </form>
