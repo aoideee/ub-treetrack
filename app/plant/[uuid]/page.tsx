@@ -20,6 +20,14 @@ type Plant = {
   last_modified: string;
 };
 
+type QRCode = {
+  qr_id: string;
+  plant_id: string;
+  qr_image: string;
+  qr_destination: string;
+  created_at: string;
+};
+
 type Rating = {
   rating_id: string;
   plant_id: string;
@@ -41,6 +49,22 @@ async function getPlant(uuid: string): Promise<Plant | null> {
   }
 
   return plant;
+}
+
+async function getQRCode(uuid: string): Promise<QRCode | null> {
+  const supabase = createSupabaseServerClient();
+
+  const { data: qrCode, error } = await supabase
+    .from("qr_codes")
+    .select("*")
+    .eq("plant_id", uuid)
+    .single();
+
+  if (error) {
+    return null;
+  }
+
+  return qrCode;
 }
 
 async function getPlantRatings(uuid: string): Promise<Rating[] | null> {
@@ -86,6 +110,11 @@ export default async function PlantPage({
     notFound();
   }
 
+  const qrCode = await getQRCode(params.uuid);
+  if (!qrCode) {
+    notFound();
+  }
+
   const plantRatings = await getPlantRatings(params.uuid);
   if (!plantRatings) {
     notFound();
@@ -120,6 +149,7 @@ export default async function PlantPage({
         user={user}
         plantId={params.uuid}
         imageHash={plant.imgur_hash}
+        qrCode={qrCode}
       />
 
       <p className="information-small mt-4">

@@ -24,7 +24,10 @@ import {
 } from "@/components/ui/form";
 
 import { imgurUpload } from "@/lib/functions/imgur-upload";
-import { addSupabaseEntry } from "@/actions";
+import { qrUpload } from "@/lib/functions/qr-upload";
+import { addSupabaseEntry, addSupabaseQREntry } from "@/actions";
+
+import QRCode from "qrcode";
 
 // zod schema and constraints
 
@@ -103,7 +106,59 @@ export default function PlantAddForm({
 
       const supabaseResponse = await addSupabaseEntry(supabaseData);
 
-      if (supabaseResponse.success) {
+      const destination = `${process.env.NEXT_PUBLIC_BASE_URL}/plant/${supabaseResponse.plantId}`;
+      // generate QR code for the plant
+      const qrCodeBuffer = await QRCode.toDataURL(destination, {
+        errorCorrectionLevel: "H",
+        type: "image/png",
+      });
+
+      // convert Data URL to Blob
+      const dataURLtoBlob = (dataurl: string) => {
+        const arr = dataurl.split(",");
+        const match = arr[0].match(/:(.*?);/);
+        const mime = match ? match[1] : "";
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+      };
+
+      // create File object from Blob
+      const qrBlob = dataURLtoBlob(qrCodeBuffer);
+      const qrFile = new File([qrBlob], `${supabaseResponse.plantId}.png`, {
+        type: "image/png",
+      });
+
+      const qrData = {
+        plantId: supabaseResponse.plantId,
+        destination,
+        imageFile: qrFile,
+      };
+
+      const qrResponse = await qrUpload(qrData);
+      if (!qrResponse.ok) {
+        throw new Error(response.statusText || "Something went wrong");
+      }
+      const qrJSON = await qrResponse.json();
+      const qrLink = qrJSON.link;
+      const qrHash = qrJSON.hash;
+
+      // add QR code entry to Supabase
+
+      const qrSupabaseData = {
+        plantId: supabaseResponse.plantId,
+        destination,
+        qrLink,
+        qrHash,
+      };
+
+      const qrSupabaseResponse = await addSupabaseQREntry(qrSupabaseData);
+
+      if (qrSupabaseResponse.success) {
         toast({
           title: "Image uploaded successfully!",
           description: "Redirecting...",

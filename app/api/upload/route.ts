@@ -8,7 +8,12 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const imgurFormData = await request.formData();
-    imgurFormData.set("album", process.env.IMGUR_ALBUM_HASH as string);
+
+    if (imgurFormData.get("qr") === "true") {
+      imgurFormData.set("album", process.env.IMGUR_QR_ALBUM_HASH as string);
+    } else {
+      imgurFormData.set("album", process.env.IMGUR_ALBUM_HASH as string);
+    }
 
     // make a call to the Imgur API to upload the image
     const response = await fetch("https://api.imgur.com/3/image", {
@@ -22,9 +27,15 @@ export async function POST(request: Request) {
     const imgurResponse = await response.json();
 
     // feedback
-    console.log(
-      `[UB TreeTrack] Uploaded plant image to Imgur: ${imgurResponse.data.id}`,
-    );
+    if (imgurFormData.get("qr") === "true") {
+      console.log(
+        `[UB TreeTrack] Uploaded plant QR code to Imgur: ${imgurResponse.data.id}`,
+      );
+    } else {
+      console.log(
+        `[UB TreeTrack] Uploaded plant image to Imgur: ${imgurResponse.data.id}`,
+      );
+    }
 
     // return the image link to the client
     return NextResponse.json({

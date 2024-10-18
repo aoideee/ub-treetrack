@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { type User } from "@supabase/supabase-js";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 import {
   Dialog,
@@ -21,14 +22,24 @@ import Link from "next/link";
 
 import { deleteSupabaseEntry, deleteImgurImage } from "@/actions";
 
+type QRCode = {
+  qr_id: string;
+  plant_id: string;
+  qr_image: string;
+  qr_destination: string;
+  created_at: string;
+};
+
 export default function PlantOptions({
   user,
   plantId,
   imageHash,
+  qrCode,
 }: {
   user: User | null;
   plantId: string;
   imageHash: string;
+  qrCode: QRCode;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -74,9 +85,18 @@ export default function PlantOptions({
               <DialogDescription>
                 Click on the image to download at full resolution.
               </DialogDescription>
+              <div className="flex items-center justify-center space-x-2">
+                <a href={qrCode.qr_image} target="_blank">
+                  <Image
+                    src={qrCode.qr_image}
+                    alt={`QR Code for ${plantId}`}
+                    width={212}
+                    height={212}
+                  />
+                </a>
+              </div>
             </DialogHeader>
-            <div className="flex items-center space-x-2"></div>
-            <DialogFooter className="sm:justify-start">
+            <DialogFooter className="sm:justify-center">
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
                   Close

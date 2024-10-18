@@ -43,7 +43,7 @@ export async function addSupabaseEntry(initialData: {
 
     // feedback
     console.log(
-      `[UB TreeTrack] ${user.user_metadata.full_name} inserted plant entry to Supabase ${entry[0].plant_id}`,
+      `[UB TreeTrack] ${user.user_metadata.full_name} inserted plant entry to Supabase: ${entry[0].plant_id}`,
     );
 
     revalidatePath("/plants");
@@ -53,6 +53,50 @@ export async function addSupabaseEntry(initialData: {
       redirectUrl: `/plant/${entry[0].plant_id}`,
       plantId: entry[0].plant_id,
     };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+// sever action to add the plant qr code entry to the Supabase database
+export async function addSupabaseQREntry(qrData: {
+  plantId: string;
+  destination: string;
+  qrLink: string;
+  qrHash: string;
+}) {
+  try {
+    const supabase = createSupabaseServerClient();
+
+    // get the user from the session
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    const { data: entry, error } = await supabase
+      .from("qr_codes")
+      .insert({
+        plant_id: qrData.plantId,
+        qr_image: qrData.qrLink,
+        qr_destination: qrData.destination,
+        imgur_hash: qrData.qrHash,
+      })
+      .select("qr_id");
+
+    if (error) {
+      throw error;
+    }
+
+    // feedback
+    console.log(
+      `[UB TreeTrack] ${user.user_metadata.full_name} added plant QR Code to Supabase: ${entry[0].qr_id}`,
+    );
+    return { success: true };
   } catch (error) {
     console.error(error);
     return { success: false, error: (error as Error).message };
@@ -72,6 +116,27 @@ export async function deleteSupabaseEntry(plantId: string) {
     if (!user) {
       throw new Error("User not authenticated");
     }
+
+    // get plant qr code and delete it
+    const { data: qrCodes, error: qrError } = await supabase
+      .from("qr_codes")
+      .select("imgur_hash")
+      .eq("plant_id", plantId);
+
+    if (qrError) {
+      throw qrError;
+    }
+
+    if (qrCodes && qrCodes.length > 0) {
+      await deleteImgurImage(qrCodes[0].imgur_hash);
+    } else {
+      throw new Error("QR codes not found for the given plant ID");
+    }
+
+    // feedback
+    console.log(
+      `[UB TreeTrack] ${user.user_metadata.full_name} deleted plant QR Code from Supabase: ${plantId}`,
+    );
 
     const { error } = await supabase
       .from("plants")
@@ -108,7 +173,7 @@ export async function deleteImgurImage(imageHash: string) {
   const imgurResponse = await response.json();
 
   if (imgurResponse.success) {
-    console.log(`[UB TreeTrack] Deleted plant image from Imgur: ${imageHash}`);
+    console.log(`[UB TreeTrack] Deleted image from Imgur: ${imageHash}`);
   } else {
     console.error(`[UB TreeTrack] Failed to delete from Imgur: ${imageHash}`);
   }
