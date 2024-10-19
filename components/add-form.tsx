@@ -77,6 +77,7 @@ export default function PlantAddForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
     setIsSubmitting(true);
 
     // split common names into an array

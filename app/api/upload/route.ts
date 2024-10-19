@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    console.log(request);
     const imgurFormData = await request.formData();
 
     if (imgurFormData.get("qr") === "true") {
