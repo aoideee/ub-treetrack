@@ -97,9 +97,9 @@ export default function PlantAddForm({
       // add entry to Supabase
 
       const supabaseData = {
-        scientificName: data.scientificName,
+        scientificName: data.scientificName.trim(),
         commonNames: commonNamesArray,
-        plantDescription: data.plantDescription,
+        plantDescription: data.plantDescription.trim(),
         imageLink,
         imageHash,
       };
