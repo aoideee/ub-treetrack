@@ -114,7 +114,13 @@ export default function PlantOptions({
             </Link>
             <Button
               variant="destructive"
-              onClick={handleDelete}
+              onClick={() => {
+                if (
+                  window.confirm("Are you sure you want to delete this plant?")
+                ) {
+                  handleDelete();
+                }
+              }}
               disabled={isSubmitting}
             >
               Delete
