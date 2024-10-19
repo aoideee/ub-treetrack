@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
+import type { Viewport } from "next";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
   title: "UB TreeTrack",
   description: "Plant tracker for the University of Belize Belmopan Campus",
 };
+
+// viewport
+export const viewport: Viewport = { themeColor: "#84cc16" };
 
 export default function RootLayout({
   children,
