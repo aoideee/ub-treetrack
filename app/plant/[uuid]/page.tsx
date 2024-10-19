@@ -7,6 +7,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
 import PlantOptions from "@/components/plant-options";
 import Rating from "@/components/rating";
 
@@ -125,45 +128,52 @@ export default async function PlantPage({
   } = await createSupabaseServerClient().auth.getUser();
 
   return (
-    <article className="card">
-      <h1 className="plant-name">{plant.scientific_name}</h1>
-      <p className="information-small mb-4 mt-2">
-        {JSON.parse(plant.common_names).join(", ")}
-      </p>
-      {plant.photo_link && (
-        <Image
-          src={plant.photo_link}
-          alt={plant.scientific_name}
-          width={500}
-          height={500}
-          className="plant-image"
+    <>
+      <article className="card">
+        <h1 className="plant-name">{plant.scientific_name}</h1>
+        <p className="information-small mb-4 mt-2">
+          {JSON.parse(plant.common_names).join(", ")}
+        </p>
+        {plant.photo_link && (
+          <Image
+            src={plant.photo_link}
+            alt={plant.scientific_name}
+            width={500}
+            height={500}
+            className="plant-image"
+          />
+        )}
+        <Rating plantId={params.uuid} plantRatings={plantRatings} />
+        <PlantOptions
+          user={user}
+          plantId={params.uuid}
+          imageHash={plant.imgur_hash}
+          qrCode={qrCode}
         />
-      )}
-      <Rating plantId={params.uuid} plantRatings={plantRatings} />
-      <PlantOptions
-        user={user}
-        plantId={params.uuid}
-        imageHash={plant.imgur_hash}
-        qrCode={qrCode}
-      />
 
-      <h2 className="information-title mt-4 uppercase">{`Description of ${plant.scientific_name}`}</h2>
-      <p className="w-full" style={{ whiteSpace: "pre-wrap" }}>
-        {plant.description}
-      </p>
-      <p className="information-small mt-4">
-        Last Modified:{" "}
-        {new Date(plant.last_modified).toLocaleString("en-US", {
-          timeZone: "America/Belize",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true,
-        })}
-      </p>
-    </article>
+        <h2 className="information-title mt-4 uppercase">{`Description of ${plant.scientific_name}`}</h2>
+        <p className="w-full" style={{ whiteSpace: "pre-wrap" }}>
+          {plant.description}
+        </p>
+        <p className="information-small mt-4">
+          Last Modified:{" "}
+          {new Date(plant.last_modified).toLocaleString("en-US", {
+            timeZone: "America/Belize",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+          })}
+        </p>
+      </article>
+      <div className="mt-4 text-center">
+        <Link href="/plants">
+          <Button variant="outline">Back to Plants</Button>
+        </Link>
+      </div>
+    </>
   );
 }
