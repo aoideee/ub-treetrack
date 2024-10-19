@@ -29,7 +29,6 @@ export default async function NavigationBar() {
   const commonButtonsArray = [
     { href: "/plants", label: "Plants" },
     { href: "/nature-walk", label: "Nature Walk" },
-    { href: "/reports", label: "Reports" },
   ];
 
   // generate common buttons for desktop
@@ -59,6 +58,9 @@ export default async function NavigationBar() {
             <Link href="/admin/add">
               <Button variant={"outline"}>Add Plant</Button>
             </Link>
+            <Link href="/reports">
+              <Button variant={"outline"}>Reports</Button>
+            </Link>
             <LogoutButton name={user?.user_metadata?.full_name || "User"} />
           </>
         ) : (
@@ -80,6 +82,13 @@ export default async function NavigationBar() {
                   <DropdownMenuItem>
                     <Button variant={"outline"} className="w-full">
                       Add Plant
+                    </Button>
+                  </DropdownMenuItem>
+                </Link>
+                <Link href="/reports">
+                  <DropdownMenuItem>
+                    <Button variant={"outline"} className="w-full">
+                      Reports
                     </Button>
                   </DropdownMenuItem>
                 </Link>

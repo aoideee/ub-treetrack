@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
 
   // protected routes and sub-routes
 
-  const protectedRoutes = ["/admin", "/update"];
+  const protectedRoutes = ["/admin", "/update", "/reports"];
 
   if (
     !user &&
@@ -29,5 +29,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*", "/plant/:id/update/:path*"],
+  matcher: [
+    "/",
+    "/admin/:path*",
+    "/plant/:id/update/:path*",
+    "/reports/:path*",
+  ],
 };
