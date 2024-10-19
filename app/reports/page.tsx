@@ -11,6 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "UB TreeTrack Reports",
+  description: "Reports on the UB TreeTrack system",
+};
 
 export default async function Reports() {
   // report names and descriptions

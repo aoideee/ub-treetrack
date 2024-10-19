@@ -13,6 +13,13 @@ import {
 } from "@/components/ui/table";
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Plants",
+  description: "Database of plants in UB TreeTrack",
+};
 
 export default async function Plants() {
   const supabase = createSupabaseServerComponentClient();

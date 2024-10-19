@@ -3,6 +3,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
 import { RatingsTrendChart } from "@/components/ratings-trend-chart";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Report | Plant Ratings Trend",
+  description:
+    "Number of ratings entered into the system per month in the last 6 months",
+};
 
 export default async function PlantRatingsTrend() {
   const supabase = createSupabaseServerComponentClient();

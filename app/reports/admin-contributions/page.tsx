@@ -15,6 +15,13 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Report | Administrator Contributions",
+  description: "Administrators by order of plants added and edits made",
+};
 
 export default async function AdminContributions() {
   const supabase = createSupabaseServerComponentClient();

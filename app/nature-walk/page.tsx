@@ -7,7 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Database } from "@/types/supabase";
+import { Metadata } from "next";
 type Plant = Database["public"]["Tables"]["plants"]["Row"];
+
+// metadata
+export const metadata: Metadata = {
+  title: "The Nature Walk",
+  description: "Explore the nature walk at the University of Belize Campus",
+};
 
 export default async function AddPlant() {
   const supabase = createSupabaseServerComponentClient();

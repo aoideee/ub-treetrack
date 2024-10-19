@@ -15,6 +15,13 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Report | Plant Popularity",
+  description: "Plants by order of rating average",
+};
 
 export default async function PlantPopularity() {
   const supabase = createSupabaseServerComponentClient();

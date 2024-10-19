@@ -15,6 +15,13 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Report | System Database Statistics",
+  description: "General statistics about the system database",
+};
 
 export default async function DatabaseStatistics() {
   const supabase = createSupabaseServerComponentClient();

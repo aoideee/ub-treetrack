@@ -2,6 +2,13 @@ import "@/styles/main.css";
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
 import PlantAddForm from "@/components/add-form";
+import { Metadata } from "next";
+
+// metadata
+export const metadata: Metadata = {
+  title: "Add Plant",
+  description: "Add a new plant to the UB TreeTrack database",
+};
 
 export default async function AddPlant() {
   const supabase = createSupabaseServerComponentClient();
