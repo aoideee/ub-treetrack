@@ -34,8 +34,6 @@ export default async function AdminContributions() {
       return null;
     }
 
-    console.log(data[0].plants);
-
     return data
       .map((admin) => ({
         ...admin,
