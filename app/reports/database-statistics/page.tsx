@@ -24,27 +24,27 @@ export default async function DatabaseStatistics() {
       .from("plants")
       .select("plant_id", { count: "exact", head: true });
 
-    const { count: adminCount, error: adminError } = await supabase
-      .from("administrators")
-      .select("admin_id", { count: "exact", head: true });
-
     const { count: ratingCount, error: ratingError } = await supabase
       .from("ratings")
       .select("rating_id", { count: "exact", head: true });
 
-    if (plantError || adminError || ratingError) {
+    const { count: adminCount, error: adminError } = await supabase
+      .from("administrators")
+      .select("admin_id", { count: "exact", head: true });
+
+    if (plantError || ratingError || adminError) {
       console.error("Error fetching database statistics:", {
         plantError,
-        adminError,
         ratingError,
+        adminError,
       });
       return null;
     }
 
     return {
       totalPlants: plantCount,
-      totalAdministrators: adminCount,
       totalRatings: ratingCount,
+      totalAdministrators: adminCount,
     };
   };
 
