@@ -87,7 +87,6 @@ export default function PlantAddForm({
     try {
       // upload image to Imgur
       const response = await imgurUpload(data);
-      console.log(response);
       if (!response.ok) {
         throw new Error(response.statusText || "Upload to Imgur Failed");
       }

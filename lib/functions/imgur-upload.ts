@@ -22,5 +22,7 @@ export async function imgurUpload(data: {
     body: imgurFormData,
   });
 
+  console.log(response);
+
   return response;
 }
