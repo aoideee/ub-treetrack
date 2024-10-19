@@ -37,6 +37,8 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log(imgurResponse);
+
     // return the image link to the client
     return NextResponse.json({
       status: "success",
