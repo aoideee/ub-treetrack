@@ -14,7 +14,7 @@ import {
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
 
-export default async function AddPlant() {
+export default async function Plants() {
   const supabase = createSupabaseServerComponentClient();
 
   const { data: plants, error } = await supabase
