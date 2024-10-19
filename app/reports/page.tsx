@@ -26,7 +26,7 @@ export default async function Reports() {
       report_name: "Administrator Contributions",
       report_description:
         "Administrators by order of plants added and edits made",
-      report_url: "/reports/administrator-contributions",
+      report_url: "/reports/admin-contributions",
     },
     {
       report_id: 3,
@@ -39,7 +39,7 @@ export default async function Reports() {
       report_name: "Plant Ratings Trend",
       report_description:
         "Number of ratings entered into the system per month in the last 3 months",
-      report_url: "/reports/ratings-trend",
+      report_url: "/reports/plant-ratings-trend",
     },
   ];
 
@@ -60,7 +60,7 @@ export default async function Reports() {
           {reports?.map((report) => (
             <TableRow key={report.report_id} className="even:bg-gray-100">
               <TableCell className="font-medium">
-                <Link href={`/plant/${report.report_url}`}>
+                <Link href={report.report_url}>
                   <span className="text-blue-600 hover:underline">
                     {report.report_name}
                   </span>
