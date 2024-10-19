@@ -4,6 +4,8 @@ import PlantUpdateForm from "@/components/update-form";
 
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server";
 import { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 // metadata
 export const metadata: Metadata = {
@@ -34,6 +36,13 @@ export default async function UpdatePlant({
     <>
       <h1 className="h1-main">Update Plant</h1>
       <PlantUpdateForm plant={plant} />
+      <div className="mt-4 text-center">
+        <Link href={`/plant/${plant.plant_id}`}>
+          <Button variant="outline" className="w-full sm:w-2/3">
+            Cancel
+          </Button>
+        </Link>
+      </div>
     </>
   );
 }
