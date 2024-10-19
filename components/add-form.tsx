@@ -65,7 +65,7 @@ export default function PlantAddForm({
         message: "Only JPG, JPEG, and PNG files are accepted.",
       })
       .refine((file) => file.size <= MAX_FILE_SIZE, {
-        message: "File size must be less than 10MB.",
+        message: "File size must be less than 4.5MB.",
       }),
   });
 
@@ -92,7 +92,7 @@ export default function PlantAddForm({
       if (!response.ok) {
         if (response.status === 413) {
           throw new Error(
-            "File size exceeds 4.5MB. Try again with a smaller image.",
+            "Sorry, while your image is technically below 4.5MB, it exceeds the request limit. Consider reducing the file size or exporting your image and then uploading it.",
           );
         }
 
