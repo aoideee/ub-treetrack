@@ -6,7 +6,6 @@ export async function imgurUpload(data: {
   plantDescription: string;
   imageFile: File;
 }) {
-  console.log(data);
   // create a new FormData object and properly set the data
   const imgurFormData = new FormData();
   imgurFormData.set("image", data.imageFile);

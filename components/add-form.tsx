@@ -31,7 +31,9 @@ import QRCode from "qrcode";
 
 // zod schema and constraints
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+// max request body size for Vercel serverless functions is 4.5MB
+// https://vercel.com/docs/functions/runtimes
+const MAX_FILE_SIZE = 4.5 * 1024 * 1024; // 4.5MB in bytes
 const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png"];
 
 export default function PlantAddForm({
@@ -77,7 +79,6 @@ export default function PlantAddForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     setIsSubmitting(true);
 
     // split common names into an array
@@ -89,6 +90,12 @@ export default function PlantAddForm({
       // upload image to Imgur
       const response = await imgurUpload(data);
       if (!response.ok) {
+        if (response.status === 413) {
+          throw new Error(
+            "File size exceeds 4.5MB. Try again with a smaller image.",
+          );
+        }
+
         throw new Error(response.statusText || "Upload to Imgur Failed");
       }
       const imgurResponse = await response.json();
@@ -272,7 +279,7 @@ export default function PlantAddForm({
               <FormDescription>
                 Accepted image file formats: JPG, JPEG, PNG
               </FormDescription>
-              <FormDescription>Max file size: 10MB</FormDescription>
+              <FormDescription>Max file size: 4.5MB</FormDescription>
               <FormMessage />
             </FormItem>
           )}

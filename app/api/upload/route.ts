@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    console.log(request);
     const imgurFormData = await request.formData();
 
     if (imgurFormData.get("qr") === "true") {
@@ -37,8 +36,6 @@ export async function POST(request: Request) {
         `[UB TreeTrack] Uploaded plant image to Imgur: ${imgurResponse.data.id}`,
       );
     }
-
-    console.log(imgurResponse);
 
     // return the image link to the client
     return NextResponse.json({
