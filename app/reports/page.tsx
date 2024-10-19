@@ -45,7 +45,7 @@ export default async function Reports() {
       report_id: 4,
       report_name: "Plant Ratings Trend",
       report_description:
-        "Number of ratings entered into the system per month in the last 3 months",
+        "Number of ratings entered into the system per month in the last 6 months",
       report_url: "/reports/plant-ratings-trend",
     },
   ];
