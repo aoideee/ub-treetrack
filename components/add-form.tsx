@@ -88,7 +88,7 @@ export default function PlantAddForm({
       // upload image to Imgur
       const response = await imgurUpload(data);
       if (!response.ok) {
-        throw new Error(response.statusText || "Something went wrong");
+        throw new Error(response.statusText || "Upload to Imgur Failed");
       }
       const imgurResponse = await response.json();
       const imageLink = imgurResponse.link;
@@ -141,7 +141,7 @@ export default function PlantAddForm({
 
       const qrResponse = await qrUpload(qrData);
       if (!qrResponse.ok) {
-        throw new Error(response.statusText || "Something went wrong");
+        throw new Error(response.statusText || "QR Upload to Imgur Failed");
       }
       const qrJSON = await qrResponse.json();
       const qrLink = qrJSON.link;

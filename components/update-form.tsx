@@ -98,7 +98,7 @@ export default function PlantUpdateForm({ plant }: { plant: Plant }) {
           imageFile: data.imageFile,
         });
         if (!response.ok) {
-          throw new Error(response.statusText || "Something went wrong");
+          throw new Error(response.statusText || "Upload to Imgur Failed");
         }
         const imgurResponse = await response.json();
         imageLink = imgurResponse.link;
