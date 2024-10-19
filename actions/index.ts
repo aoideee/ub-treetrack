@@ -238,6 +238,27 @@ export async function updateSupabaseEntry(
       }
     }
 
+    // get admin edits
+    const { data: adminData, error: adminError } = await supabase
+      .from("administrators")
+      .select("edits")
+      .eq("admin_id", user.id)
+      .single();
+
+    if (adminError) {
+      throw adminError;
+    }
+
+    // increment admin edits
+    const { error } = await supabase
+      .from("administrators")
+      .update({ edits: adminData.edits + 1 })
+      .eq("admin_id", user.id);
+
+    if (error) {
+      throw error;
+    }
+
     // feedback
     console.log(
       `[UB TreeTrack] ${user.user_metadata.full_name} updated plant entry in Supabase: ${plantId}`,
