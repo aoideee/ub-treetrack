@@ -58,8 +58,8 @@ export default function PlantOptions({
         description: "The plant has been successfully deleted.",
       });
 
-      // redirect to the homepage
-      router.push("/");
+      // redirect to the plants page
+      router.push("/plants");
     } catch (error) {
       console.error("Error deleting plant:", error);
       toast({
