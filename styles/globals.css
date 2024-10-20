@@ -10,7 +10,7 @@
   }
 
   .bg {
-    @apply md:bg-[url('/backgrounds/scenery2.jpeg')] md:bg-cover md:bg-center;
+    @apply md:bg-[url('/backgrounds/rlc-sideview.webp')] md:bg-cover md:bg-center;
   }
 
   main {
