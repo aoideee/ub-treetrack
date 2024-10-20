@@ -21,3 +21,11 @@
 .nature-description {
   @apply text-gray-500;
 }
+
+.prof-link {
+  color: #86198f;
+}
+
+.prof-link:hover {
+  color: #b565c0;
+}

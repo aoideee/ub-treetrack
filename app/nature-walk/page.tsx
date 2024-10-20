@@ -29,23 +29,28 @@ export default async function AddPlant() {
     <>
       <h1 className="h1-main">The Nature Walk</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacinia,
-        nibh molestie tincidunt posuere, nisl massa efficitur urna, non iaculis
-        ligula urna in metus. Nullam posuere accumsan eros vel condimentum.
-        Quisque est eros, scelerisque hendrerit justo eu, maximus auctor lectus.
-        Praesent elementum placerat orci ut volutpat. Cras et augue massa. Morbi
-        at justo auctor, imperdiet elit sit amet, hendrerit leo. Suspendisse
-        convallis varius arcu ut congue. Donec sodales leo tempor lorem cursus
-        porttitor tincidunt at est. Suspendisse eu libero ac velit tristique
-        venenatis id id mauris. Duis risus arcu, hendrerit sit amet ante vitae,
-        sagittis pharetra ex. In id lorem orci. Nunc placerat, tortor eu varius
-        mattis, metus nunc porta nibh, quis pharetra sapien sem quis leo. Donec
-        vel gravida massa. Morbi scelerisque accumsan condimentum. Duis in
-        eleifend massa. Vestibulum sit amet ante tempor, vulputate orci rutrum,
-        pulvinar lectus. Mauris vel felis ac tellus pellentesque aliquam a ac
-        ligula. Aliquam placerat velit tellus. Donec ac lorem et neque egestas
-        pharetra. Pellentesque metus arcu, aliquam sit amet hendrerit ut,
-        volutpat ac orci. Aliquam pharetra lacus et blandit bibendum.
+        The nature walk is a tour of the{" "}
+        <a href="https://www.ub.edu.bz/" className="ub-link">
+          University of Belize
+        </a>{" "}
+        campus that takes students and visitors through a curated path
+        containing a variety of plants native to not only the UB campus, but
+        also to Belize. The path has been expertly designed by{" "}
+        <a
+          href="https://www.researchgate.net/profile/Latha-Thomas"
+          className="prof-link"
+        >
+          Dr. Latha Thomas
+        </a>{" "}
+        to showcase the rich biodiversity and beauty that can be found on the UB
+        campus. This serves as a great opportunity to admire the beauty provided
+        by the natural world, while also learning interesting facts about the
+        plants that you will encounter.
+        <br />
+        <br />
+        The following are a few of the plants that you may encounter on your
+        journey through the nature walk. Feel free to click on any of the plants
+        to learn more about them!
       </p>
       <div className="nature-grid">
         {plants?.map((plant: Plant) => (
