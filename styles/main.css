@@ -9,3 +9,19 @@
 .front-carousel {
   @apply m-8 flex flex-col items-center justify-around gap-6 xl:flex-row xl:gap-24;
 }
+
+/* homepage description styles*/
+.ubtt-title {
+  color: #86198f;
+  font-weight: bold;
+}
+
+.ub-link,
+.plants-link {
+  color: #86198f;
+}
+
+.ub-link:hover,
+.plants-link:hover {
+  color: #b565c0;
+}

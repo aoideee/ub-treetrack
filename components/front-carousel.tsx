@@ -46,23 +46,28 @@ export default function FrontCarousel() {
         <CarouselNext />
       </Carousel>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacinia,
-        nibh molestie tincidunt posuere, nisl massa efficitur urna, non iaculis
-        ligula urna in metus. Nullam posuere accumsan eros vel condimentum.
-        Quisque est eros, scelerisque hendrerit justo eu, maximus auctor lectus.
-        Praesent elementum placerat orci ut volutpat. Cras et augue massa. Morbi
-        at justo auctor, imperdiet elit sit amet, hendrerit leo. Suspendisse
-        convallis varius arcu ut congue. Donec sodales leo tempor lorem cursus
-        porttitor tincidunt at est. Suspendisse eu libero ac velit tristique
-        venenatis id id mauris. Duis risus arcu, hendrerit sit amet ante vitae,
-        sagittis pharetra ex. In id lorem orci. Nunc placerat, tortor eu varius
-        mattis, metus nunc porta nibh, quis pharetra sapien sem quis leo. Donec
-        vel gravida massa. Morbi scelerisque accumsan condimentum. Duis in
-        eleifend massa. Vestibulum sit amet ante tempor, vulputate orci rutrum,
-        pulvinar lectus. Mauris vel felis ac tellus pellentesque aliquam a ac
-        ligula. Aliquam placerat velit tellus. Donec ac lorem et neque egestas
-        pharetra. Pellentesque metus arcu, aliquam sit amet hendrerit ut,
-        volutpat ac orci. Aliquam pharetra lacus et blandit bibendum.
+        <span className="ubtt-title">The UB TreeTrack Project</span> aims to
+        enhance biodiversity awareness at the{" "}
+        <a href="https://www.ub.edu.bz/" className="ub-link">
+          University of Belize
+        </a>
+        . The project&apos;s primary goal is to educate the students, faculty,
+        and visitors about the diverse plant species on campus through an
+        interactive platform. It also aims to promote the importance of
+        biodiversity conservation and sustainable practices within not only the
+        university but the wider community as well.
+        <br />
+        <br />
+        The project site boasts a curated{" "}
+        <a href="../../plants/" className="plants-link">
+          database
+        </a>{" "}
+        of the plant species found on the campus in alphabetical order. Each
+        plant entry includes the plant&apos;s scientific name, common name,
+        description, and images. This database will be continuously updated as
+        new species are identified on campus.
+        <br />
+        <br />
       </p>
     </section>
   );
