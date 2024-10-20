@@ -13,9 +13,20 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image"; // used for lazy loading images
+
+// import images
+import image1 from "@/public/carousel/gazebo-area.webp";
+import image2 from "@/public/carousel/fst-office-outskirts.webp";
+import image3 from "@/public/carousel/evening-sun.webp";
+import image4 from "@/public/carousel/sunny-afternoon.webp";
+import image5 from "@/public/carousel/sunset.webp";
 
 export default function FrontCarousel() {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
+
+  // array of images
+  const images = [image1, image2, image3, image4, image5];
 
   return (
     <section className="front-carousel">
@@ -30,12 +41,17 @@ export default function FrontCarousel() {
         }}
       >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {images.map((src, index) => (
             <CarouselItem key={index}>
               <div className="p-1">
                 <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
-                    <span className="text-4xl font-semibold">{index + 1}</span>
+                  <CardContent className="relative flex aspect-square items-center justify-center p-6">
+                    <Image
+                      src={src}
+                      alt={`Slide ${index + 1}`}
+                      layout="fill"
+                      className="object-cover"
+                    />
                   </CardContent>
                 </Card>
               </div>
@@ -59,7 +75,7 @@ export default function FrontCarousel() {
         <br />
         <br />
         The project site boasts a curated{" "}
-        <a href="../../plants/" className="plants-link">
+        <a href="plants/" className="plants-link">
           database
         </a>{" "}
         of the plant species found on the campus in alphabetical order. Each
