@@ -15,18 +15,17 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image"; // used for lazy loading images
 
-// import images
-import image1 from "@/public/carousel/gazebo-area.webp";
-import image2 from "@/public/carousel/fst-office-outskirts.webp";
-import image3 from "@/public/carousel/evening-sun.webp";
-import image4 from "@/public/carousel/sunny-afternoon.webp";
-import image5 from "@/public/carousel/sunset.webp";
-
 export default function FrontCarousel() {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
 
-  // array of images
-  const images = [image1, image2, image3, image4, image5];
+  // array of image paths
+  const imagePaths = [
+    "/carousel/gazebo-area.webp",
+    "/carousel/fst-office-outskirts.webp",
+    "/carousel/evening-sun.webp",
+    "/carousel/sunny-afternoon.webp",
+    "/carousel/sunset.webp",
+  ];
 
   return (
     <section className="front-carousel">
@@ -41,16 +40,16 @@ export default function FrontCarousel() {
         }}
       >
         <CarouselContent>
-          {images.map((src, index) => (
+          {imagePaths.map((path, index) => (
             <CarouselItem key={index}>
               <div className="p-1">
                 <Card>
                   <CardContent className="relative flex aspect-square items-center justify-center p-6">
                     <Image
-                      src={src}
+                      src={path}
                       alt={`Slide ${index + 1}`}
                       layout="fill"
-                      className="object-cover"
+                      className="rounded-md object-cover"
                     />
                   </CardContent>
                 </Card>
